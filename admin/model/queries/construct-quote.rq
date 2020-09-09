@@ -1,0 +1,7 @@
+PREFIX schema: <https://schema.org>
+
+CONSTRUCT
+{
+  ?this a schema:Quotation .
+}
+WHERE {}
