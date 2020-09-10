@@ -20,9 +20,33 @@ printf "\n### Making the app public\n\n"
 
 popd
 
-printf "\n### Creating authorizations\n\n"
+# printf "\n### Creating authorizations\n\n"
 
-find "${pwd}" -name '*.ttl' -exec ./admin/acl/create-authorization.sh "${base}" "${cert_pem_file}" "${cert_password}" "${pwd}" {} \;
+# find "${pwd}" -name '*.ttl' -exec ./admin/acl/create-authorization.sh "${base}" "${cert_pem_file}" "${cert_password}" "${pwd}" {} \;
+
+pushd . && cd admin/model
+
+printf "\n### Creating constructor queries\n\n"
+
+./create-constructors.sh "$base" "$cert_pem_file" "$cert_password"
+
+printf "\n### Creating classes\n\n"
+
+./create-classes.sh "$base" "$cert_pem_file" "$cert_password"
+
+printf "\n### Creating restrictions\n\n"
+
+./create-restrictions.sh "$base" "$cert_pem_file" "$cert_password"
+
+popd
+
+pushd . && cd ./admin
+
+printf "\n### Clearing ontologies\n\n"
+
+./clear-ontologies.sh "$base" "$cert_pem_file" "$cert_password"
+
+popd
 
 printf "\n### Create containers\n\n"
 
