@@ -1,8 +1,9 @@
 @prefix schema: <http://schema.org/>.
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
 @prefix sioc:   <http://rdfs.org/sioc/ns#> .
+@prefix def: <ns/default#> .
 
-<quotes/q3> a schema:Quotation;
+<quotes/q3> a def:Item, schema:Quotation;
     sioc:has_container <quotes/> ;
     schema:text "A heart is not judged by how much you love, but by how much you are loved by others.";
     schema:spokenByCharacter <http://dbpedia.org/resource/Frank_Morgan> .

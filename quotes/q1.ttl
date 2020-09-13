@@ -1,8 +1,9 @@
 @prefix schema: <http://schema.org/>.
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
-@prefix sioc:   <http://rdfs.org/sioc/ns#> .
+@prefix sioc: <http://rdfs.org/sioc/ns#> .
+@prefix def: <ns/default#> .
 
-<quotes/q1> a schema:Quotation;
+<quotes/q1> a def:Item, schema:Quotation;
     sioc:has_container <quotes/> ;
     schema:text "Ask not what your country can do for you. Ask what you can do for your country.";
     schema:spokenByCharacter <http://dbpedia.org/resource/John_F._Kennedy>;
