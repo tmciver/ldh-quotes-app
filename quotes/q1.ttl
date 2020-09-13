@@ -1,7 +1,9 @@
-@prefix sch: <http://schema.org/>.
+@prefix schema: <http://schema.org/>.
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix sioc:   <http://rdfs.org/sioc/ns#> .
 
-<> a sch:Quotation;
-   sch:text "Ask not what your country can do for you. Ask what you can do for your country.";
-   sch:spokenByCharacter <http://dbpedia.org/resource/John_F._Kennedy>;
-   sch:datePublished "1961-01-20T12:00-06:00"^^xsd:dateTime .
+<quotes/q1> a schema:Quotation;
+    sioc:has_container <quotes/> ;
+    schema:text "Ask not what your country can do for you. Ask what you can do for your country.";
+    schema:spokenByCharacter <http://dbpedia.org/resource/John_F._Kennedy>;
+    schema:datePublished "1961-01-20T12:00-06:00"^^xsd:dateTime .
