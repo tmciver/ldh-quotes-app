@@ -1,0 +1,6 @@
+@prefix sch: <http://schema.org/>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+
+<> a sch:Quotation;
+   sch:text "Things may come to those who wait, but only the things left by those who hustle.";
+   sch:spokenByCharacter <http://dbpedia.org/resource/Abraham_Lincoln> .
