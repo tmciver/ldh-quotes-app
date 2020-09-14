@@ -1,8 +1,16 @@
-@prefix schema: <http://schema.org/>.
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix dom:    <ns/domain#> .
+@prefix schema: <https://schema.org/> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
 @prefix sioc:   <http://rdfs.org/sioc/ns#> .
+@prefix foaf:   <http://xmlns.com/foaf/0.1/> .
+@prefix dct:    <http://purl.org/dc/terms/> .
 
-<quotes/q3> a schema:Quotation;
+<quotes/q3/> a dom:QuoteItem ;
     sioc:has_container <quotes/> ;
+    dct:title "Quote 3" ;
+    foaf:primaryTopic <quotes/q3/#this> .
+
+<quotes/q3/#this> a dom:Quote ;
+    foaf:isPrimaryTopicOf <quotes/q3/> ;
     schema:text "A heart is not judged by how much you love, but by how much you are loved by others.";
     schema:spokenByCharacter <http://dbpedia.org/resource/Frank_Morgan> .

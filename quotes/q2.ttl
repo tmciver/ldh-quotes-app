@@ -1,8 +1,16 @@
-@prefix schema: <http://schema.org/>.
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix dom:    <ns/domain#> .
+@prefix schema: <https://schema.org/> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
 @prefix sioc:   <http://rdfs.org/sioc/ns#> .
+@prefix foaf:   <http://xmlns.com/foaf/0.1/> .
+@prefix dct:    <http://purl.org/dc/terms/> .
 
-<quotes/q2> a schema:Quotation;
+<quotes/q2/> a dom:QuoteItem ;
     sioc:has_container <quotes/> ;
+    dct:title "Quote 2" ;
+    foaf:primaryTopic <quotes/q2/#this> .
+
+<quotes/q2/#this> a dom:Quote ;
+    foaf:isPrimaryTopicOf <quotes/q2/> ;
     schema:text "Things may come to those who wait, but only the things left by those who hustle.";
     schema:spokenByCharacter <http://dbpedia.org/resource/Abraham_Lincoln> .

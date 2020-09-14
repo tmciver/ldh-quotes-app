@@ -6,6 +6,7 @@ CONSTRUCT
 {
     ?this schema:text [ a xsd:string ] ;
         schema:spokenByCharacter [ a rdfs:Resource ] ;
-        schema:isBasedOn [ a rdfs:Resource ] .
+        schema:isBasedOn [ a rdfs:Resource ] ;
+        schema:datePublished [ a xsd:date ] .
 }
 WHERE {}

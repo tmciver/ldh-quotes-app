@@ -1,9 +1,17 @@
-@prefix schema: <http://schema.org/>.
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix dom:    <ns/domain#> .
+@prefix schema: <https://schema.org/>.
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
 @prefix sioc:   <http://rdfs.org/sioc/ns#> .
+@prefix foaf:   <http://xmlns.com/foaf/0.1/> .
+@prefix dct:    <http://purl.org/dc/terms/> .
 
-<quotes/q1> a schema:Quotation;
+<quotes/q1/> a dom:QuoteItem ;
     sioc:has_container <quotes/> ;
+    dct:title "Quote 1" ;
+    foaf:primaryTopic <quotes/q1/#this> .
+
+<quotes/q1/#this> a dom:Quote ;
+    foaf:isPrimaryTopicOf <quotes/q1/> ;
     schema:text "Ask not what your country can do for you. Ask what you can do for your country.";
     schema:spokenByCharacter <http://dbpedia.org/resource/John_F._Kennedy>;
-    schema:datePublished "1961-01-20T12:00-06:00"^^xsd:dateTime .
+    schema:datePublished "1961-01-20"^^xsd:date .

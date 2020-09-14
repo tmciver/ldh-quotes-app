@@ -24,6 +24,7 @@ pushd . && cd "$SCRIPT_ROOT"/admin/model
 --slug quote \
 --constructor "${base}ns/domain#ConstructQuote" \
 --sub-class-of "${base}ns/domain#TopicOfQuoteItem" \
+--sub-class-of "https://schema.org/Quotation" \
 --path "{isPrimaryTopicOf.slug}/" \
 --fragment "this"
 
