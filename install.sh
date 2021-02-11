@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ "$#" -ne 3 ]; then
   echo "Usage:   $0 $base $cert_pem_file $cert_password" >&2
@@ -12,11 +12,11 @@ cert_pem_file=$(realpath -s "$2")
 cert_password="$3"
 pwd="$(realpath -s "$PWD")"
 
-pushd . && cd ./admin
+pushd .
 
 printf "\n### Making the app public\n\n"
 
-./make-public.sh "$base" "$cert_pem_file" "$cert_password"
+"$SCRIPT_ROOT"/admin/acl/make-public.sh -b "$base" -f "$cert_pem_file" -p "$cert_password"
 
 popd
 
@@ -54,4 +54,4 @@ printf "\n### Create containers\n\n"
 
 printf "\n### Add some quotes\n\n"
 
-find "${pwd}" -name '*.ttl' -exec ./update-document.sh "${base}" "${cert_pem_file}" "${cert_password}" "${pwd}" {} \;
+find "${pwd}" -name '*.ttl' -exec cat {} \; | $SCRIPT_ROOT/update-document.sh -f "${cert_pem_file}" -p "${cert_password}" -t "text/turtle" "${base}"

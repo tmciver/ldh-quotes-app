@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ "$#" -ne 3 ]; then
   echo "Usage:   $0 $base $cert_pem_file cert_password" >&2

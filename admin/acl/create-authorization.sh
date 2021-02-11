@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ "$#" -ne 5 ]; then
   echo "Usage:   $0 cert_pem_file cert_password pwd abs_filename" >&2
