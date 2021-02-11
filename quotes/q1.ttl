@@ -7,11 +7,12 @@
 
 <quotes/q1/> a dom:QuoteItem ;
     sioc:has_container <quotes/> ;
-    dct:title "Quote 1" ;
+    dct:title "Ask not" ;
     foaf:primaryTopic <quotes/q1/#this> .
 
 <quotes/q1/#this> a dom:Quote ;
     foaf:isPrimaryTopicOf <quotes/q1/> ;
+    dct:title "Ask not" ;
     schema:text "Ask not what your country can do for you. Ask what you can do for your country.";
     schema:spokenByCharacter <http://dbpedia.org/resource/John_F._Kennedy>;
     schema:datePublished "1961-01-20"^^xsd:date .

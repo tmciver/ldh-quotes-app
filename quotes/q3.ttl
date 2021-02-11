@@ -7,10 +7,11 @@
 
 <quotes/q3/> a dom:QuoteItem ;
     sioc:has_container <quotes/> ;
-    dct:title "Quote 3" ;
+    dct:title "Heart judged" ;
     foaf:primaryTopic <quotes/q3/#this> .
 
 <quotes/q3/#this> a dom:Quote ;
     foaf:isPrimaryTopicOf <quotes/q3/> ;
+    dct:title "Heart judged" ;
     schema:text "A heart is not judged by how much you love, but by how much you are loved by others.";
     schema:spokenByCharacter <http://dbpedia.org/resource/Frank_Morgan> .

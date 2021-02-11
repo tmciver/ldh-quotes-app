@@ -7,10 +7,11 @@
 
 <quotes/q2/> a dom:QuoteItem ;
     sioc:has_container <quotes/> ;
-    dct:title "Quote 2" ;
+    dct:title "Things come" ;
     foaf:primaryTopic <quotes/q2/#this> .
 
 <quotes/q2/#this> a dom:Quote ;
     foaf:isPrimaryTopicOf <quotes/q2/> ;
+    dct:title "Things come" ;
     schema:text "Things may come to those who wait, but only the things left by those who hustle.";
     schema:spokenByCharacter <http://dbpedia.org/resource/Abraham_Lincoln> .
