@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ "$#" -ne 3 ]; then
-  echo "Usage:   $0 $base $cert_pem_file $cert_password" >&2
+  echo "Usage:   $0" '$base $cert_pem_file $cert_password' >&2
   echo "Example: $0" 'https://localhost:4443/ ../../../LinkedDataHub/certs/owner.p12.pem Password' >&2
   echo "Note: special characters such as $ need to be escaped in passwords!" >&2
   exit 1
@@ -54,4 +54,4 @@ printf "\n### Create containers\n\n"
 
 printf "\n### Add some quotes\n\n"
 
-find "${pwd}" -name '*.ttl' -exec ./update-document.sh "${base}" "${cert_pem_file}" "${cert_password}" "${pwd}" {} \;
+find "${PWD}/quotes" -name '*.ttl' -exec ./update-document.sh "$base" "$cert_pem_file" "$cert_password" "$PWD" {} \;
