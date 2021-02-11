@@ -22,7 +22,7 @@ popd
 
 printf "\n### Creating authorizations\n\n"
 
-find "${pwd}" -name '*.ttl' -exec ./admin/acl/create-authorization.sh "${base}" "${cert_pem_file}" "${cert_password}" "${pwd}" {} \;
+find "$PWD" -name '*.ttl' -exec ./admin/acl/create-authorization.sh "$base" "$cert_pem_file" "$cert_password" "$PWD" {} \;
 
 pushd . && cd admin/model
 
