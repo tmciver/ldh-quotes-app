@@ -28,7 +28,7 @@ printf "\n### Creating authorization for %s\n" "${base}${path}"
 -f "${cert_pem_file}" \
 -p "${cert_password}" \
 --label "Write ${path}" \
---agent "${webid_uri}" \
+--agent-class http://xmlns.com/foaf/0.1/Agent \
 --to "${base}${path}" \
 --write
 
