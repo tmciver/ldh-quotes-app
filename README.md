@@ -33,7 +33,8 @@ and you'll have the above system dependencies satisfied.
 
 ### Install
 
-To install "LDH Quotes" run the following command:
+To install "LDH Quotes", first clone this repository and `cd` into the project
+directory.  Then, run the following command:
 
     $ export SCRIPT_ROOT=<path-to-ldh-scripts-dir> \
 	  ./install.sh \
