@@ -2,8 +2,9 @@
 
 pkgs.mkShell {
     buildInputs = [
-	pkgs.apache-jena
-	pkgs.python
-	pkgs.openssl
+        pkgs.jdk
+        pkgs.apache-jena
+        pkgs.python
+        pkgs.openssl
     ];
 }
