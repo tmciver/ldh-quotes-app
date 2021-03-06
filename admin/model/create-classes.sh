@@ -35,7 +35,7 @@ pushd . && cd "$SCRIPT_ROOT"/admin/model
 --uri "${base}ns/domain#QuoteItem" \
 --label "Quote item" \
 --slug quote-item \
---sub-class-of "${base}ns/default#Item" \
+--sub-class-of "${base}ns/domain/default#Item" \
 --sub-class-of "${base}ns/domain#ItemOfQuoteContainer"
 
 popd
