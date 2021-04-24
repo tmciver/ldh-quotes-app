@@ -1,0 +1,104 @@
+version: "2.3"
+services:
+  nginx:
+    image: atomgraph/nginx
+    mem_limit: 128m
+    command: /bin/bash -c "envsubst '$$UPSTREAM_SERVER $$UPSTREAM_HTTPS_PORT $$UPSTREAM_HTTP_PORT $$SERVER_NAME $$SERVER_HTTPS_PORT $$SERVER_HTTP_PORT $$SERVER_CERT_FILE $$SERVER_KEY_FILE $$MAX_BODY_SIZE' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
+    ports:
+      - ${HTTP_PORT}:${HTTP_PORT} # allow Tomcat to do HTTP to HTTPS redirect
+      - ${HTTPS_PORT}:${HTTPS_PORT} # HTTPS
+    environment:
+      - UPSTREAM_SERVER=linkeddatahub
+      - UPSTREAM_HTTPS_PORT=8443
+      - UPSTREAM_HTTP_PORT=8080
+      - SERVER_NAME=${HOST}
+      - SERVER_HTTPS_PORT=${HTTPS_PORT}
+      - SERVER_HTTP_PORT=${HTTP_PORT}
+      - SERVER_CERT_FILE=/etc/nginx/ssl/server.crt
+      - SERVER_KEY_FILE=/etc/nginx/ssl/server.key
+      - MAX_BODY_SIZE=2097152
+    volumes:
+      - ./platform/nginx.conf.template:/etc/nginx/nginx.conf.template:ro
+      - ./ssl/server:/etc/nginx/ssl:ro
+  linkeddatahub:
+    image: atomgraph/linkeddatahub:latest
+    ports:
+      - 8001:8000 # debugger
+    environment:
+    #  - JPDA_ADDRESS=*:8000 # debugger host - performance hit when enabled
+      - CATALINA_OPTS=-XX:+UseContainerSupport -XX:MaxRAMPercentage=75 # heap will use up to 75% of container's RAM
+      - ATOMGRAPH_UPLOAD_ROOT=/var/www/linkeddatahub/uploads/
+      - TZ="Europe/Copenhagen"
+      #- CATALINA_OPTS="-Duser.timezone=Europe/Copenhagen"
+      - PROXY_HOST=nginx
+      - PROTOCOL=${PROTOCOL}
+      - HOST=${HOST}
+      - ABS_PATH=${ABS_PATH}
+      - HTTP_SCHEME=https
+      - HTTP_PROXY_NAME=${HOST}
+      - HTTP_PROXY_PORT=${HTTPS_PORT}
+      - HTTP_REDIRECT_PORT=${HTTPS_PORT}
+      - HTTPS_PROXY_PORT=${HTTPS_PORT}
+      - HTTPS=false
+      - CLIENT_KEYSTORE_PASSWORD=${SECRETARY_CERT_PASSWORD}
+      - CLIENT_TRUSTSTORE_PASSWORD=LinkedDataHub
+      - SELF_SIGNED_CERT=true # only on localhost
+      - SIGN_UP_CERT_VALIDITY=180
+      - IMPORT_KEEPALIVE=300000
+      - MAX_CONTENT_LENGTH=2097152
+      - MAIL_SMTP_HOST=email-server
+      - MAIL_SMTP_PORT=25
+      - MAIL_USER=linkeddatahub@localhost
+      - OWNER_MBOX=${OWNER_MBOX}
+      # - GOOGLE_CLIENT_ID=
+      # - GOOGLE_CLIENT_SECRET=
+    volumes:
+      - ./ssl/server:/var/linkeddatahub/ssl/server:ro
+      - ./ssl/owner/public.pem:/var/linkeddatahub/ssl/owner/public.pem:ro
+      - ./ssl/secretary:/var/linkeddatahub/ssl/secretary:ro
+      - ./uploads:/var/www/linkeddatahub/uploads
+      - ./config/dev.log4j.properties:/usr/local/tomcat/webapps/ROOT/WEB-INF/classes/log4j.properties:ro
+      - ./config/system-varnish.trig:/var/linkeddatahub/datasets/system.trig:ro
+      - ./platform/datasets/admin.trig:/var/linkeddatahub/datasets/admin.trig:ro
+      - ./platform/datasets/end-user.trig:/var/linkeddatahub/datasets/end-user.trig:ro
+      - ./src/main/resources/com/atomgraph/linkeddatahub/apl.ttl:/usr/local/tomcat/webapps/ROOT/WEB-INF/classes/com/atomgraph/linkeddatahub/apl.ttl:ro
+      - ./src/main/resources/com/atomgraph/linkeddatahub/aplt.ttl:/usr/local/tomcat/webapps/ROOT/WEB-INF/classes/com/atomgraph/linkeddatahub/aplt.ttl:ro
+      - ./src/main/resources/com/atomgraph/linkeddatahub/lapp.ttl:/usr/local/tomcat/webapps/ROOT/WEB-INF/classes/com/atomgraph/linkeddatahub/lapp.ttl:ro
+      - ./src/main/resources/com/atomgraph/linkeddatahub/app/admin/lsm.ttl:/usr/local/tomcat/webapps/ROOT/WEB-INF/classes/com/atomgraph/linkeddatahub/app/admin/lsm.ttl:ro
+      - ./src/main/webapp/static/com/atomgraph/linkeddatahub/xsl/bootstrap/2.3.2:/usr/local/tomcat/webapps/ROOT/static/com/atomgraph/linkeddatahub/xsl/bootstrap/2.3.2:ro
+      - ./src/main/webapp/static/com/atomgraph/linkeddatahub/css/bootstrap.css:/usr/local/tomcat/webapps/ROOT/static/com/atomgraph/linkeddatahub/css/bootstrap.css
+      - ./src/main/webapp/static/com/atomgraph/linkeddatahub/js/jquery.js:/usr/local/tomcat/webapps/ROOT/static/com/atomgraph/linkeddatahub/js/jquery.js:ro
+      - ../../ldh-quotes-app/files/quotes.xsl:/usr/local/tomcat/webapps/ROOT/static/com/atomgraph/linkeddatahub/xsl/index.xsl:ro
+  fuseki-admin:
+    image: atomgraph/fuseki
+    ports:
+      - 3030:3030
+    volumes:
+      - ./config/fuseki/admin.ttl:/var/fuseki/config.ttl:ro
+      - ./data/admin:/var/fuseki/data
+    command: [ "--config", "/var/fuseki/config.ttl" ]
+  fuseki-end-user:
+    image: atomgraph/fuseki
+    ports:
+      - 3031:3030
+    volumes:
+      - ./config/fuseki/end-user.ttl:/var/fuseki/config.ttl:ro
+      - ./data/end-user:/var/fuseki/data
+    command: [ "--config", "/var/fuseki/config.ttl" ]
+  varnish-end-user:
+    image: atomgraph/varnish
+    depends_on:
+      - linkeddatahub
+    environment:
+      - BACKEND_HOST=fuseki-end-user
+      - BACKEND_PORT=3030
+      - CLIENT_HOST=linkeddatahub
+      - VARNISH_TTL=86400
+    privileged: true
+    entrypoint: /bin/sh -c "envsubst < /etc/varnish/default.vcl.template > /etc/varnish/default.vcl && /bin/sh ./entrypoint.sh"
+    volumes:
+      - ./platform/varnish.vcl.template:/etc/varnish/default.vcl.template:ro
+  email-server:
+    image: namshi/smtp
+    environment:
+      - DISABLE_IPV6=true
