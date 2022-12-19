@@ -12,11 +12,11 @@ cert_pem_file=$(realpath -s "$2")
 cert_password="$3"
 pwd="$(realpath -s "$PWD")"
 
-pushd . && cd ./admin
+pushd "${SCRIPT_ROOT}admin/acl"
 
 printf "\n### Making the app public\n\n"
 
-./make-public.sh "$base" "$cert_pem_file" "$cert_password"
+./make-public.sh -b "$base" -f "$cert_pem_file" -p "$cert_password"
 
 popd
 
@@ -33,10 +33,6 @@ printf "\n### Creating constructor queries\n\n"
 printf "\n### Creating classes\n\n"
 
 ./create-classes.sh "$base" "$cert_pem_file" "$cert_password"
-
-printf "\n### Creating restrictions\n\n"
-
-./create-restrictions.sh "$base" "$cert_pem_file" "$cert_password"
 
 popd
 

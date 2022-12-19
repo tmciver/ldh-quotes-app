@@ -19,23 +19,13 @@ pushd . && cd "$SCRIPT_ROOT"/admin/model
 -b "${base}admin/" \
 -f "$cert_pem_file" \
 -p "$cert_password" \
---uri "${base}ns/domain#Quote" \
+--uri "${base}ns#Quote" \
 --label "Quote" \
 --slug quote \
---constructor "${base}ns/domain#ConstructQuote" \
---sub-class-of "${base}ns/domain#TopicOfQuoteItem" \
+--constructor "${base}ns#ConstructQuote" \
 --sub-class-of "https://schema.org/Quotation" \
 --path "{isPrimaryTopicOf.slug}/" \
---fragment "this"
-
-./create-class.sh \
--b "${base}admin/" \
--f "$cert_pem_file" \
--p "$cert_password" \
---uri "${base}ns/domain#QuoteItem" \
---label "Quote item" \
---slug quote-item \
---sub-class-of "${base}ns/default#Item" \
---sub-class-of "${base}ns/domain#ItemOfQuoteContainer"
+--fragment "this" \
+"${base}admin/model/ontologies/namespace/"
 
 popd

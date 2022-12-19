@@ -7,8 +7,9 @@ CONSTRUCT
 {
     ?this dct:title [ a xsd:string ] ;
         schema:text [ a xsd:string ] ;
-        schema:spokenByCharacter [ a rdfs:Resource ] ;
+        schema:spokenByCharacter [ ?speaker a schema:Person ] ;
         schema:isBasedOn [ a rdfs:Resource ] ;
         schema:datePublished [ a xsd:date ] .
+    ?speaker schema:name ?speakerName .
 }
 WHERE {}

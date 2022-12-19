@@ -18,12 +18,13 @@ pwd=$(realpath -s $PWD)
 pushd . && cd "$SCRIPT_ROOT"/admin/model
 
 ./create-construct.sh \
--b "${base}admin/" \
--f "$cert_pem_file" \
--p "$cert_password" \
---uri "${base}ns/domain#ConstructQuote" \
---label "Construct quote" \
---slug construct-quote \
---query-file "$pwd/queries/construct-quote.rq"
+    -b "${base}admin/" \
+    -f "$cert_pem_file" \
+    -p "$cert_password" \
+    --uri "${base}ns#ConstructQuote" \
+    --label "Construct quote" \
+    --slug construct-quote \
+    --query-file "$pwd/queries/construct-quote.rq" \
+    "${base}admin/model/ontologies/namespace/"
 
 popd

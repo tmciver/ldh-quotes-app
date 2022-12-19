@@ -33,17 +33,24 @@
 
   <xsl:output method="html"/>
 
+  <xsl:param name="apl:baseUri" as="xs:anyURI" static="yes"/>
+  <xsl:import _href="{resolve-uri('static/com/atomgraph/linkeddatahub/xsl/bootstrap/2.3.2/layout.xsl', $apl:baseUri)}"/>
+
   <!-- <xsl:param name="ac:uri" select="'https://localhost:4443/quotes/q2/'" /> -->
 
-  <xsl:template match="/">
-    <html>
-      <body>
-	<xsl:apply-templates select="/rdf:RDF/rdf:Description"/>
-      </body>
-    </html>
-  </xsl:template>
+  <!-- <xsl:template match="/"> -->
+  <!--   <html> -->
+  <!--     <body> -->
+  <!-- 	<xsl:apply-templates select="/rdf:RDF/rdf:Description"/> -->
+  <!--     </body> -->
+  <!--   </html> -->
+  <!-- </xsl:template> -->
 
-  <xsl:template match="*[foaf:isPrimaryTopicOf/@rdf:resource = $ac:uri]">
+  <xsl:template match="*[foaf:isPrimaryTopicOf/@rdf:resource = $ac:uri]" mode="bs2:Block">
+    <!-- <xsl:template match="*[schema:text]" mode="bs2:Block"> -->
+
+    <!-- <xsl:next-match/> -->
+      
     <p>
       <xsl:value-of select="schema:text"/>
     </p>
@@ -53,6 +60,6 @@
     </p>
   </xsl:template>
 
-  <xsl:template match="*"/>
+  <!-- <xsl:template match="*"/> -->
   
 </xsl:stylesheet>
