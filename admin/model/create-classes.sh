@@ -24,7 +24,6 @@ pushd . && cd "$SCRIPT_ROOT"/admin/model
 --slug quote \
 --constructor "${base}ns#ConstructQuote" \
 --sub-class-of "https://schema.org/Quotation" \
---path "{isPrimaryTopicOf.slug}/" \
 --fragment "this" \
 "${base}admin/model/ontologies/namespace/"
 

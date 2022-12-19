@@ -23,6 +23,6 @@ pushd . && cd "$SCRIPT_ROOT"
 --title "Quotes" \
 --slug "quotes" \
 --parent "$base" \
-"$base"
+--proxy "$base"
 
 popd

@@ -1,16 +1,17 @@
-@prefix dom:    <ns/domain#> .
+@prefix ns:     <ns#> .
+@prefix dh:	<https://www.w3.org/ns/ldt/document-hierarchy#> .
 @prefix schema: <https://schema.org/> .
 @prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
 @prefix sioc:   <http://rdfs.org/sioc/ns#> .
 @prefix foaf:   <http://xmlns.com/foaf/0.1/> .
 @prefix dct:    <http://purl.org/dc/terms/> .
 
-<quotes/q2/> a dom:QuoteItem ;
+<quotes/q2/> a dh:Item ;
     sioc:has_container <quotes/> ;
     dct:title "Things come" ;
     foaf:primaryTopic <quotes/q2/#this> .
 
-<quotes/q2/#this> a dom:Quote ;
+<quotes/q2/#this> a ns:Quote ;
     foaf:isPrimaryTopicOf <quotes/q2/> ;
     dct:title "Things come" ;
     schema:text "Things may come to those who wait, but only the things left by those who hustle.";

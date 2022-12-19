@@ -1,4 +1,3 @@
-@prefix dom:    <ns/domain#> .
 @prefix ns:     <ns#> .
 @prefix dh:	<https://www.w3.org/ns/ldt/document-hierarchy#> .
 @prefix schema: <https://schema.org/>.
